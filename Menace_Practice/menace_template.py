@@ -5,7 +5,7 @@
 from random import choice
 
 # Quasi-constants for learning parameters
-from Menace_Practice.board_template import *
+from board_template import *
 
 NUM_START_PEARLS = 20
 
@@ -96,6 +96,7 @@ def train(menace, n_plays):
     for curr_play in range(n_plays):
         game_history, result = game(menace)
         update(menace, game_history, result)
+        print_hist(game_history)
     return menace
 
 
@@ -143,5 +144,5 @@ matchbox = init_pearls(board)
 menace = {}
 
 train(menace, 100)
-hist, winner = game(menace)
-print_hist(hist)
+#hist, winner = game(menace)
+#print_hist(hist)

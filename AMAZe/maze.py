@@ -48,13 +48,14 @@ def is_in_same_row(state, i_row):
     pass
 
 
-def possible_moves(state):
-    moves = []
-    for i_row, row in enumerate(MAZE):
-        for i_column, cell in enumerate(row):
-            if is_in_same_column(state, i_column) or is_in_same_row(state, i_row):
-            
-    return moves
+#def possible_moves(state):
+#    moves = []
+#    for i_row, row in enumerate(MAZE):
+#        for i_column, cell in enumerate(row):
+ #           if is_in_same_column(state, i_column) or is_in_same_row(state, i_row):    
+#            return moves
+#        pass
+#    pass
 
 
 # When the position matches the goal, we're done
