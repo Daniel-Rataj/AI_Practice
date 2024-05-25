@@ -105,11 +105,10 @@ def update(gps, hist):
         hist_remaining = []
         for state_compare, move_compare in hist_reversed:
             if state_compare == state:
-                if move != move_compare:
-                    if move_compare in gps[state]:
-                        gps[state].remove(move_compare)
+                if move_compare and move != move_compare in gps[state]:
+                    gps[state].remove(move_compare)
             else:
-                hist_remaining.append(state_compare, move_compare)
+                hist_remaining.append((state_compare, move_compare))
         hist_reversed = hist_remaining
         
 
@@ -120,7 +119,6 @@ def train(gps, n_times):
             print(f"Train run: {i}")
         hist = game(gps)
         update(gps, hist)
-    return
 
 
 # Try out the system:
@@ -141,3 +139,5 @@ hist = game(my_gps)
 # my_hist = game(my_gps)
 # print("Length of game history after training: " + str(len(my_hist)))
 # print_hist(my_hist)
+
+#Servus
