@@ -36,24 +36,19 @@ def print_maze(state=()):
 
 # Make a move within the maze (the move is assumed to be valid)
 def make_move(state, move):
-    pass
-
-
-# Get all possible moves from a certain position
-def is_in_same_column(state, i_column):
-    pass
-
-
-def is_in_same_row(state, i_row):
-    pass
+    return (state[0] + move[0], state[1] + move[1])
 
 
 def possible_moves(state):
     moves = []
-    for i_row, row in enumerate(MAZE):
-        for i_column, cell in enumerate(row):
-            if is_in_same_column(state, i_column) or is_in_same_row(state, i_row):
-            
+    moves_all = [(1, 0), (0, 1), (-1, 0), (0, -1)]
+    for move in moves_all:
+        next_state = make_move(state, move)
+        if next_state[0] >= 0 and next_state[1] >= 0 \
+            and next_state[0] < len(MAZE) \
+            and next_state[1] < len(MAZE[0]) \
+            and MAZE[next_state[0]][next_state[1]] != '0':
+            moves.append(move)
     return moves
 
 
@@ -106,8 +101,20 @@ def print_hist(hist):
 
 # Update the learning system with a game history
 def update(gps, hist):
-    pass
-    
+    hist_reversed = hist.reverse()
+    while len(hist_reversed) > 0:
+        state, move = hist_reversed[0]
+        gps[state] = gps[state] + [move] * LEARN_WIN
+        hist_remaining = []
+        for state_compare, move_compare in hist_reversed:
+            if state_compare == state:
+                if move != move_compare:
+                    if move_compare in gps[state]:
+                        gps[state].remove(move_compare)
+            else:
+                hist_remaining.append(state_compare, move_compare)
+        hist_reversed = hist_remaining
+        
 
 # Perform a couple of maze games and learn from them
 def train(gps, n_times):
@@ -120,10 +127,10 @@ def train(gps, n_times):
 
 
 # Try out the system:
+my_gps = {}
 my_state = init_state()
 print_maze()
-print(goal_reached((4,1)))
-# my_gps = {}
+hist = game(my_gps)
 
 # Perform a single game and print the game history:
 # my_hist = game(my_gps)
